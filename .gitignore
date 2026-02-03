@@ -1,4 +1,6 @@
 /target
 /scrape
 .env
-database.db
+*.db
+*.db-shm
+*.db-wal

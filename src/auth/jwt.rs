@@ -11,14 +11,21 @@ static JWT_SECRET: LazyLock<String> = LazyLock::new(|| env::var("JWT_SECRET").un
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Claims {
     pub sub: u32,
+    pub username: String,
     pub role: String,
     pub exp: i64,
 }
 
-pub fn create_token(user_id: u32, role: &str, duration: Duration) -> Result<String, JwtError> {
+pub fn create_token(
+    user_id: u32,
+    username: String,
+    role: String,
+    duration: Duration,
+) -> Result<String, JwtError> {
     let claims = Claims {
         sub: user_id,
-        role: role.to_string(),
+        username,
+        role,
         exp: (Utc::now() + duration).timestamp(),
     };
 

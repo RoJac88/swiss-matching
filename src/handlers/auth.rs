@@ -29,14 +29,19 @@ async fn login(
     {
         return AppError::LoginFailed("Invalid credentials".to_string()).into_response();
     }
-    let token = match create_token(user.id, &user.role, chrono::Duration::hours(24)) {
+    let token = match create_token(
+        user.id,
+        payload.username,
+        user.role.clone(),
+        chrono::Duration::hours(24),
+    ) {
         Ok(t) => t,
         Err(_) => return AppError::Unknown.into_response(),
     };
     AppResponse::Success {
         payload: SuccessResponse::LoginSuccess {
             token,
-            role: user.role.to_string(),
+            role: user.role,
         },
     }
     .into_response()
