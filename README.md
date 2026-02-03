@@ -62,6 +62,8 @@ The frontend (SolidJS application) is in a separate repo:
   cp .env.example .env
   ```
 
+The application does not read the .env file on its own. In develpment I recommend using a tool like [direnv](https://direnv.net/) to automatically load and unload .env files. This choice is deliberate as there are quite a few ways in which env vars can be set in production (like docker files or systemd service config files), so this is not necessarily the responsability of the application.
+
 3. Setup database
 
   ```bash
